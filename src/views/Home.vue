@@ -1,22 +1,18 @@
 <template>
  <v-row>
-   <!-- <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="!isMobile">
+   <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="!isMobile">
       <v-col cols="5" sm="6" md="4" class="card" v-for="pokemon in allPokemons" :key="pokemon.id"  >
           <v-btn rounded class="details" @click="SelectCard(pokemon)">
-            <v-col cols="12" sm="12" md="12" class="details-pokemon" >
-                Teste
-            </v-col >
+               <v-img contain :src="pokemon.images.large" max-height="430" max-width="400"/>
           </v-btn>
       </v-col>
-   </v-col> -->
-   <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="!isMobile">
+   </v-col>
+   <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="isMobile">
       <v-col cols="12" sm="12" md="12" class="card-mobile">
         <Carousel class="card-imgs">
           <Slide v-for="pokemon in allPokemons" :key="pokemon.id" class="card-slides" >
-            <v-btn rounded class="card-details" @click="SelectCard(pokemon)">
-              <v-col cols="12" sm="12" md="12"  >
-                TESTE
-              </v-col> 
+            <v-btn rounded class="card-details" @click="SelectCard(pokemon)" >
+                  <v-img contain :src="pokemon.images.large" max-height="460" max-width="400"/>
             </v-btn>
           </Slide>
         </Carousel>
@@ -43,11 +39,9 @@ export default class Home extends Vue {
 
   private isMobile: Boolean = false;
   
-
   public async SelectCard(pokemon: any): Promise<void>{
     console.log(pokemon);
   }
-
 
   beforeMount(){
     if( navigator.userAgent.match(/Android/i)
@@ -94,14 +88,12 @@ export default class Home extends Vue {
   flex-direction:column;
   align-items: flex-start;
   justify-content: flex-start;
-  border:dotted;
   height: 100%;
 }
 
 .app-pokemon .card .details .details-pokemon{
   display:flex;
   flex-direction: column;
-  border:dotted;
   height: 100%;
   width: 100%;
 }
@@ -122,14 +114,14 @@ export default class Home extends Vue {
 .app-pokemon .card-mobile .card-imgs .card-slides{
   display:flex;
   flex-direction: column;
-  height: 60vh;
+  height: 70vh;
 }
 
 .app-pokemon .card-mobile .card-imgs .card-slides .card-details{
   display: flex;
   flex-direction: column;
-  border:dotted;
-  height: 100%;
+  height: 95%;
   width: 100%;
 }
+
 </style>
