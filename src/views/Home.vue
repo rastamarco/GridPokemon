@@ -2,16 +2,54 @@
  <v-row>
    <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="!isMobile">
       <v-col cols="5" sm="6" md="4" class="card" v-for="pokemon in allPokemons" :key="pokemon.id"  >
-          <v-img contain :src="pokemon.images.large" max-height="350" max-width="350" @click="SelectCard(pokemon)"/>
+        <v-hover v-slot="{ hover }" >
+          <v-img  contain :src="pokemon.images.large" max-height="350" max-width="350" @click="SelectCard(pokemon)">
+            <v-expand-transition >
+              <div v-if="hover" class="pokemon-hover">
+                <small class="pokemon-hover-text"><b>Nome: {{pokemon.name}}</b></small>
+                <small class="pokemon-hover-text"><b>Id: {{pokemon.id}}</b></small>
+                <small class="pokemon-hover-text"><b>Tipo: </b></small>
+                <v-list dense style="background: orange;" >
+                      <v-list-item v-for="(item, i) in pokemon.types" :key="i" no-action dense>
+                        <v-list-item-icon>
+                          <v-icon >mdi-hops</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title v-text="item" style="font-weight:bold;color:black;"></v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                  </v-list>
+              </div>
+            </v-expand-transition>
+        </v-img>
+        </v-hover>
       </v-col>
    </v-col>
    <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="isMobile">
       <v-col cols="12" sm="12" md="12" class="card-mobile">
         <Carousel class="card-imgs">
           <Slide v-for="pokemon in allPokemons" :key="pokemon.id" class="card-slides" >
-            <!-- <v-btn rounded class="card-details" @click="SelectCard(pokemon)" > -->
-                  <v-img contain :src="pokemon.images.large" max-height="350" max-width="310" @click="SelectCard(pokemon)"/>
-            <!-- </v-btn> -->
+            <v-hover v-slot="{ hover }" >
+                  <v-img contain :src="pokemon.images.large" max-height="350" max-width="310" @click="SelectCard(pokemon)" >
+                   <v-expand-transition >
+                    <div v-if="hover" class="pokemon-hover">
+                    <small class="pokemon-hover-text"><b>Nome: {{pokemon.name}}</b></small>
+                    <small class="pokemon-hover-text"><b>Id: {{pokemon.id}}</b></small>
+                    <small class="pokemon-hover-text"><b>Tipo: </b></small>
+                    <v-list dense style="background: orange;" >
+                      <v-list-item v-for="(item, i) in pokemon.types" :key="i" no-action dense>
+                        <v-list-item-icon>
+                          <v-icon >mdi-hops</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title v-text="item" style="font-weight:bold;color:black;"></v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </div>
+                </v-expand-transition>
+              </v-img>
+            </v-hover>
           </Slide>
         </Carousel>
       </v-col>  
@@ -39,6 +77,7 @@ export default class Home extends Vue {
   private isMobile: Boolean = false;
   
   public async SelectCard(pokemon: any): Promise<void>{
+    console.log(pokemon);
     window.localStorage.setItem('pokemon', JSON.stringify(pokemon))
     await this.SetBackHome({backHome: true})
     this.$router.push('Details');
@@ -107,6 +146,22 @@ export default class Home extends Vue {
   width: 100%;
 }
 
+.pokemon-hover{
+  background: orange;
+  display:flex;
+  flex-direction: column;
+  opacity: 0.9;
+  height: 40%;
+  margin-left: 12%;
+  margin-right: 12%;
+}
+
+.pokemon-hover-text{
+  color: black;
+  font-weight: bold;
+  margin-left: 5%;
+  margin-top: 5%;
+}
 
 .app-pokemon .card-mobile{
   display:flex;
@@ -137,6 +192,20 @@ export default class Home extends Vue {
   flex-direction: column;
   height: 95%;
   width: 100%;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+  .pokemon-hover{
+    background: orange;
+    display:flex;
+    flex-direction: column;
+    opacity: 0.9;
+    height: 40%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 25%;
+  }
 }
 
 </style>

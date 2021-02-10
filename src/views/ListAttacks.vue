@@ -1,7 +1,7 @@
 <template>
  <v-row>
    <v-col cols="12" sm="12" md="12" class="app-pokemon">
-       <v-card style="box-shadow: none;">
+       <v-card style="box-shadow: none;width:100%">
         <v-card-title class="headline">
           Detalhes do Ataque
         </v-card-title>
@@ -41,4 +41,5 @@ export default class ListAttacks extends Vue {
   height: 45vh;
   background: white;
 }
+
 </style>

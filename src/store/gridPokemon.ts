@@ -45,7 +45,10 @@ export const gridPokemon = {
       });
       if (response) {
         if (response.status === 200) {
-          await commit('SetAllPokemons', response.data.data);
+          let pokemons = response.data.data;
+          pokemons.sort();
+
+          await commit('SetAllPokemons', pokemons);
           await commit('SetDataAPI', response.data)
         }
       } 
