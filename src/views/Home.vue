@@ -9,9 +9,9 @@
       <v-col cols="12" sm="12" md="12" class="card-mobile">
         <Carousel class="card-imgs">
           <Slide v-for="pokemon in allPokemons" :key="pokemon.id" class="card-slides" >
-            <v-btn rounded class="card-details" @click="SelectCard(pokemon)" >
-                  <v-img contain :src="pokemon.images.large" max-height="460" max-width="400"/>
-            </v-btn>
+            <!-- <v-btn rounded class="card-details" @click="SelectCard(pokemon)" > -->
+                  <v-img contain :src="pokemon.images.large" max-height="350" max-width="310" @click="SelectCard(pokemon)"/>
+            <!-- </v-btn> -->
           </Slide>
         </Carousel>
       </v-col>  
@@ -124,6 +124,12 @@ export default class Home extends Vue {
   display:flex;
   flex-direction: column;
   height: 70vh;
+  cursor: pointer;
+}
+
+.app-pokemon .card-mobile .card-imgs .card-slides:hover{
+  background: white;
+  opacity: 0.8;
 }
 
 .app-pokemon .card-mobile .card-imgs .card-slides .card-details{

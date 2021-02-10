@@ -1,13 +1,25 @@
 <template>
-  <v-app  >
+  <v-app >
     <v-app-bar app color="primary" dark>
-        <h2 v-if="!backHome" >Pokémon</h2>
-            <h2 v-if="backHome" @click="StateRouter(false)" class="btn-home"> 
-              <v-icon>mdi-arrow-left-bold-circle-outline</v-icon>
-              Home 
-            </h2>
+        <h2 v-if="!backHome" >Pokémon - Selecione sua Carta!</h2>
+        <h2 v-if="backHome" @click="StateRouter(false)" class="btn-home"> 
+          <v-icon>mdi-arrow-left-bold-circle-outline</v-icon>
+          Home 
+        </h2>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon absolute right v-bind="attrs" v-on="on" style="margin-right: 2%;"><v-icon>mdi-layers-triple</v-icon></v-btn> 
+          </template>
+          <span>English</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+           <v-btn icon absolute right  v-bind="attrs" v-on="on" ><v-icon>mdi-layers-triple-outline</v-icon></v-btn> 
+          </template>
+          <span>Português</span>
+        </v-tooltip>
     </v-app-bar>
-    <v-main>
+    <v-main class="app">
        <router-view></router-view>
     </v-main>
   </v-app>
@@ -34,4 +46,6 @@ export default class App extends Vue{
 .btn-home{
   cursor: pointer;
 }
+
+
 </style>

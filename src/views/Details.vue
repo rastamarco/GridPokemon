@@ -1,7 +1,7 @@
 <template>
  <v-row>
-   <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="!isMobile">
-      <v-col cols="4" sm="5" md="5" class="card">
+   <v-col cols="12" sm="12" md="12" class="app-pokemon">
+      <v-col cols="4" sm="5" md="5" class="card" >
          <v-img contain :src="pokemonSelected.images.large" max-height="490" max-width="500"/>
       </v-col>
       <v-col cols="6" sm="7" md="7" class="card-details">
@@ -11,7 +11,7 @@
                   <span>Nome: {{pokemonSelected.name}}</span>
                   <span>ID: {{pokemonSelected.id}}</span>
                   <span>Tipo: </span>
-                  <v-list>
+                  <v-list dense >
                       <v-list-item v-for="(item, i) in pokemonSelected.types" :key="i" no-action>
                         <v-list-item-icon>
                           <v-icon >mdi-hops</v-icon>
@@ -42,7 +42,7 @@
                           <v-list-item-title>Lista de Ataques</v-list-item-title>
                         </v-list-item-content>
                       </template>
-                      <v-dialog v-model="dialog" persistent width="30%">
+                      <v-dialog v-model="dialog" persistent width="30%" >
                         <template v-slot:activator="{ on, attrs }">
                           <v-list-item v-for="item in pokemonSelected.attacks" :key="item.name" v-on="on" v-bind="attrs">
                             <v-list-item-content>
@@ -50,7 +50,7 @@
                             </v-list-item-content>
                           </v-list-item>
                         </template>
-                        <ListAttacks v-bind="{pokemonAttack}" v-on="{CloseAtkDetails}"/>
+                        <ListAttacks v-bind="{pokemonAttack}" v-on="{CloseAtkDetails}" class="modal" />
                       </v-dialog>
                     </v-list-group>
                   </v-list>
@@ -106,12 +106,10 @@ export default class Details extends Vue {
     this.SetBackHome({backHome: true})
   }
 
-  mounted(){
-    console.log(this.pokemonSelected);
-  }
   public CloseAtkDetails():void{
     this.dialog = false;    
   }
+
 }
 </script>
 <style scoped>
@@ -156,11 +154,41 @@ export default class Details extends Vue {
   flex-direction: column;
   height: 70%;
 }
+
 .app-pokemon .card-details .pokemon-details .content{
   display:flex;
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
 }
+
+.modal{
+  margin:0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 640px) {
+  .app-pokemon{
+      display:flex;
+      flex-direction:column;
+      justify-content: flex-start;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      width: 100%;
+      height: 85vh;
+      margin-top: 2%;
+      margin-left: 3%;
+      padding-right: 6%;
+  }
+
+  .app-pokemon .card-details .pokemon-details .header{
+    display:flex;
+    flex-direction: column;
+    height: 70%;
+    font-size: 12px;
+  }
+}
+
+
 
 </style>

@@ -1,7 +1,7 @@
 <template>
  <v-row>
    <v-col cols="12" sm="12" md="12" class="app-pokemon">
-       <v-card>
+       <v-card style="box-shadow: none;">
         <v-card-title class="headline">
           Detalhes do Ataque
         </v-card-title>
@@ -13,7 +13,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="CloseAttackDetails()" >
+          <v-btn color="green darken-1" absolute right bottom text @click="CloseAttackDetails()" >
             Fechar
           </v-btn>
         </v-card-actions>
@@ -38,7 +38,7 @@ export default class ListAttacks extends Vue {
 .app-pokemon{
   display:flex;
   flex-direction:row;
-  height: 50vh;
+  height: 45vh;
   background: white;
 }
 </style>
