@@ -2,9 +2,7 @@
  <v-row>
    <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="!isMobile">
       <v-col cols="5" sm="6" md="4" class="card" v-for="pokemon in allPokemons" :key="pokemon.id"  >
-          <v-btn rounded class="details" @click="SelectCard(pokemon)">
-               <v-img contain :src="pokemon.images.large" max-height="430" max-width="400"/>
-          </v-btn>
+          <v-img contain :src="pokemon.images.large" max-height="350" max-width="350" @click="SelectCard(pokemon)"/>
       </v-col>
    </v-col>
    <v-col cols="12" sm="12" md="12" class="app-pokemon" v-if="isMobile">
@@ -34,13 +32,16 @@ import { Action, Getter } from 'vuex-class';
 })
 export default class Home extends Vue {
   @Action GetAllPokemons
+  @Action SetBackHome
 
   @Getter allPokemons
 
   private isMobile: Boolean = false;
   
   public async SelectCard(pokemon: any): Promise<void>{
-    console.log(pokemon);
+    window.localStorage.setItem('pokemon', JSON.stringify(pokemon))
+    await this.SetBackHome({backHome: true})
+    this.$router.push('Details');
   }
 
   beforeMount(){
@@ -58,7 +59,9 @@ export default class Home extends Vue {
   }
 
   async mounted(){
-      await this.GetAllPokemons({});
+      if(this.allPokemons === null){
+        await this.GetAllPokemons();
+      }
   }
 }
 </script>
@@ -80,6 +83,12 @@ export default class Home extends Vue {
   display:flex;
   flex-direction:column;
   height: 75%;
+  cursor: pointer;
+}
+
+.app-pokemon .card:hover{
+  background: white;
+  opacity: 0.8;
 }
 
 

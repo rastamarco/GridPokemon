@@ -3,7 +3,9 @@ import axios from 'axios';
 export const gridPokemon = {
   state:{
     allPokemons: null,
-    dataAPI: null
+    dataAPI: null,
+    pokemon: null,
+    backHome: null
   },
   getters:{
     allPokemons(state) {
@@ -12,6 +14,12 @@ export const gridPokemon = {
     dataAPI(state) {
       return state.dataAPI;
     },
+    pokemon(state){
+      return state.pokemon
+    },
+    backHome(state){
+      return state.backHome
+    }
 
   },
   mutations:{
@@ -21,8 +29,12 @@ export const gridPokemon = {
     SetDataAPI(state, value) {
       state.dataAPI = value;
     },
-
-
+    SetPokemon(state, value) {
+      state.Pokemon = value;
+    },
+    SetBackHome(state, value){
+      state.backHome = value;
+    }
   },
   actions:{
     async GetAllPokemons({ commit }, options){
@@ -39,5 +51,8 @@ export const gridPokemon = {
       } 
     }, 
 
+    async SetBackHome({ commit }, options){
+      await commit('SetBackHome', options.backHome);
+    }
   }
 };
