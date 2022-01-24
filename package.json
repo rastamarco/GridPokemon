@@ -1,7 +1,7 @@
 {
-  "name": "project-base",
+  "name": "project",
   "version": "1.0.0",
-  "description": "A project for futures developments of front-end",
+  "description": "A project for developments of front-end",
   "author": "Marco Aurélio Souza - souza.marco04@gmail.com",
   "private": true,
   "scripts": {
@@ -64,7 +64,7 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.7.1",
+    "webpack": "^3.12.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",

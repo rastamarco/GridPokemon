@@ -22,7 +22,7 @@ const routes = new Router({
 
 routes.beforeEach((to, from, next) => {
   let isLogged =  JSON.parse(localStorage.getItem('user'))
-
+  
   if (to.meta.auth) {
     if (!isLogged) {
       localStorage.clear()
@@ -44,12 +44,29 @@ routes.beforeEach((to, from, next) => {
   }
 
   if (to.path === '/') {
-    if (isLogged) {
+    if (isLogged !== null) {
       next({ path: '/home' })
     } else {
       next()
     }
   }
+
+  if (to.path === '/home') {
+    if (isLogged !== null) {
+      next({ path: '/home' })
+    } else {
+      next({ path: '/' })
+    }
+  }
+
+  if (to.path === '/Home') {
+    if (isLogged !== null) {
+      next({ path: '/home' })
+    } else {
+      next({ path: '/' })
+    }
+  }
+  
 })
 
 export default routes

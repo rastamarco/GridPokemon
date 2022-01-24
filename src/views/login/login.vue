@@ -2,24 +2,27 @@
   <div >
     <container>
       <template v-slot:main>
+
           <v-col cols="12" sm="12" md="12" class="login-content">
             <div class="content">
+              <!-- Card que contém os componentes para para inserção dos dados -->
               <v-card class="card-login" outlined tile>
                 <v-card-text>
                   <p class="text--primary">
                     Login 
                   </p>    
                 </v-card-text>
+
                 <v-text-field
                   v-model="model.user" 
-                  label="Usuário" 
-                  placeholder="souza.marco04@gmail.com" 
+                  placeholder="user@dominio.com" 
                   outlined
-                  dense>
+                  dense
+                  >
                   </v-text-field>
+
                 <v-text-field 
                   v-model="model.password"
-                  label="Senha" 
                   :type="'password'" 
                   placeholder="******" 
                   counter 
@@ -32,7 +35,9 @@
                     </v-btn>
                   </v-card-actions>
               </v-card>
+              
               <v-progress-circular indeterminate :size="50" v-if="isLoading"> </v-progress-circular>
+              
             </div>
           </v-col>
       </template>
@@ -60,7 +65,6 @@ export default {
   },
 
   methods: login
-
 }
 </script>
 
@@ -87,4 +91,9 @@ export default {
   padding-right: 5%;
 }
 
+.user{
+  display:flex;
+  flex-direction: row;
+
+}
 </style>

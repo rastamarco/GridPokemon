@@ -1,17 +1,61 @@
 <template>
   <div id="app">
-    <header>
-      <span>Pokémons</span>
+    <header class="header-app">
+
+      <div class="title">
+        <span>Pokémons</span>
+      </div>
+
+      <div class="logout" v-show="getUser.user">
+        <h5>Bem-Vindo: {{ getUser.user }} </h5>&nbsp;&nbsp;
+        <v-icon
+          :id="'btnIdlout'"
+          @click="logout()"
+          class="icon-action-content-edit"
+          size="1.7em"
+          title="Sair"
+          color="#FFF"
+          >
+          mdi-logout
+        </v-icon>
+      </div>
+
     </header>
-    <main>
+    <main >
       <router-view></router-view>
     </main>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+    }
+  },
+
+  methods: {
+    ...mapActions(['setUser']),
+
+    logout() {
+      localStorage.removeItem('user')
+      this.$router.push('/')
+      window.location.reload()
+    }
+  },
+
+  computed: {
+      ...mapGetters(['getUser'])  
+  },
+
+  async beforeMount() {
+    let user = JSON.parse(localStorage.getItem('user'))
+
+    if (user)
+      await this.setUser(user)
+  }
 }
 </script>
 
@@ -20,11 +64,30 @@ body {
   margin: 0;
 }
 
+html, body{
+  overflow-y: hidden;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   /* -webkit-font-smoothing: antialiased; */
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.header-app{
+  display:flex;
+  flex-direction: row;
+}
+
+.title{
+  width: 50%;
+}
+
+.logout{
+  width: 50%;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 main {

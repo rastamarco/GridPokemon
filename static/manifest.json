@@ -1,6 +1,6 @@
 {
-  "name": "project-base",
-  "short_name": "project-base",
+  "name": "project",
+  "short_name": "project",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",

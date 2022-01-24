@@ -4,7 +4,7 @@ import iziToast from 'izitoast'
 
 Vue.mixin({
   methods: {
-    ...mapActions(['setPaginate', 'setTotalRows']),
+    ...mapActions(['setPaginate', 'setTotalRows', 'setCurrentlyPage', 'setNextPage', 'setPreviousPage']),
     
     showToast(type, message, title = '') {
       iziToast[type]({ title, message })
@@ -12,6 +12,6 @@ Vue.mixin({
   },
 
   computed: {
-    ...mapGetters(['getPagination'])
+    ...mapGetters(['getPagination', 'getCurrentlyPage', 'getNextPage', 'getPreviousPage'])
   }
 })

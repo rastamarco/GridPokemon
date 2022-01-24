@@ -1,16 +1,17 @@
 <template>
+  <!-- Componente de tabela/Grid genérico, contém paginação instanciada já, substituindo o método nativo de search por um pessoal -->
   <v-data-table
     :options.sync="pagination"
     :headers="headers"
-    :items="listItems"
+    :items="listSearch"
     :items-per-page="20"
-    :server-items-length="getTotalRows ? getTotalRows : listItems.length"
+    :server-items-length="getTotalRows ? getTotalRows : listSearch.length"
     :fixed-header="true"
     :hide-default-footer="listItems.length === 0"
     :footer-props="{
-      'items-per-page-text': `Items por Página  `,
+      'items-per-page-text': `Por Página`,
       'items-per-page-options': [20, 30, 50, 100],
-      'show-first-last-page': true,
+      'show-first-last-page': false,
       'show-current-page': true
     }"
     :single-expand="true"
@@ -18,33 +19,29 @@
     height="100%"
     :item-key="itemKey"
     class="table-component"
-    @item-selected="value => $emit('selected', value)"
   >
-    
     <template v-slot:item.action="{ item }">
+      <!-- Esse template vê o item que contém a tag "action" e coloca um icone , que ao clicar emit um evento retornando o item clicado -->
       <template>
         <div class="container-actions">
-            <v-icon
-                @click="copyItem(item)"
-                class="icon-action-content-edit"
-                size="1.7em"
-                title="Visualizar"
-                >
-                mdi-eye
+          <v-icon
+              :id="'btnId'+item.name"
+               @click="showItem(item)"
+              class="icon-action-content-edit"
+              size="1.7em"
+              title="Detalhes"
+              >
+              mdi-eye
             </v-icon>
         </div>
       </template>
     </template>
   </v-data-table>
 </template>
-
 <script>
-import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-  },
   props: {
     listItems: {
       type: Array,
@@ -66,10 +63,6 @@ export default {
       type: String,
       default: ''
     },
-    enableEdit: {
-      type: Boolean,
-      default: true
-    },
     itemKey: {
       type: String,
       default: 'id'
@@ -83,24 +76,19 @@ export default {
   },
 
   methods: {
-    copyItem(item) {
+    //Retorna o item selecionado pelo icone do Grid
+    showItem(item) {
       let itemIdx = this.listItems.indexOf(item)
       if (itemIdx !== -1) {
         item.indexList = itemIdx
       }
-
-      this.$emit('copy', item)
-    }
-  },
-
-  filters: {
-    formatDate(date) {
-      if (!date) return ''
-      return moment(date).format('DD/MM/YYYY')
+      
+      this.$emit('showItem', item)
     }
   },
 
   watch: {
+    //Método que verifica a paginação da tabela, qualqeur interação com a paginaçao cai aqui e insere globalmente
     pagination: {
       handler (value) {
         this.setPaginate(value)
@@ -111,7 +99,7 @@ export default {
 
   computed: {
     ...mapGetters(['getTotalRows']),
-
+    //Método search que substitui o nativo, pois com a paginação quebra o nativo 
     listSearch() {
       return this.listItems.filter(i => {
           return Object.values(i).join(',').toUpperCase().includes(this.search.toUpperCase())
@@ -134,17 +122,6 @@ export default {
   align-items: center;
 }
 
-.automaticLoad {
-  display: flex;
-  justify-content: center;
-  border: 2px solid #06b100;
-  border-radius: 5px;
-  color: #06b100;
-  padding: 0 1em;
-  font-weight: bolder;
-  max-width: 50px;
-}
-
 .icon-action-content {
   display: flex;
   width: 100%;
@@ -155,18 +132,6 @@ export default {
   color: #00437a;
 }
 
-.icon-action-content-remove:hover {
-  color: #f00;
-}
-
-.icon-action-content-log:hover {
-  color: #00437a;
-}
-
-.table-history {
-  padding: 0 !important;
-}
-
 .table-component {
   display: flex;
   flex-direction: column;
@@ -174,14 +139,16 @@ export default {
   margin-bottom: 36px;
 }
 
-.table-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.table-component ::-webkit-scrollbar-track{
+  background-color: #F4F4F4;
 }
 
-.input-search {
-  margin: 1em 1em;
-  width: 50% !important;
+.table-component ::-webkit-scrollbar{
+  width: 5px;
+  background: #F4F4F4;
+}
+
+.table-component ::-webkit-scrollbar-thumb{
+  background: silver;
 }
 </style>
